@@ -1,3 +1,6 @@
+#ifndef	POLINOMIO_H
+#define	POLINOMIO_H	
+
 typedef struct polinomio MONOMIO;
 
 MONOMIO POLINOMIO[];
@@ -26,4 +29,6 @@ float IMPRIMEINV ();
 
 void LIBERA ();
 
-void FIM ();
+void FIM ()
+
+#endif	
