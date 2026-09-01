@@ -1,3 +1,7 @@
+typedef struct polinomio MONOMIO;
+
+MONOMIO POLINOMIO[];
+
 void NOME ();
 
 void SOMA ();
@@ -16,9 +20,9 @@ void REMOVEMENOR ();
 
 int GRAU ();
 
-float IMPRIME[];
+float IMPRIME ();
 
-float IMPRIMEINV[];
+float IMPRIMEINV ();
 
 void LIBERA ();
 
