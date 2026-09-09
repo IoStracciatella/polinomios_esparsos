@@ -3,6 +3,7 @@
 #include <string.h>
 #include "polinomio.h"
 
+
 int main(){
     char c[12];
     int fim = 0;
@@ -10,7 +11,7 @@ int main(){
     while (fim == 0){
         scanf("%s", c);
         if (strcmp(c,"DEF") == 0){
-            char nome[32];
+            char *nome = (char *)malloc(sizeof(char)*32);
             int k;
             scanf("%s", nome);
             scanf("%d", &k);
@@ -69,7 +70,7 @@ int main(){
             scanf("%s", A);
             IMPRIME(A);
         }
-        else if(strcmp(c, "IMPRIMVEINV") == 0){
+        else if(strcmp(c, "IMPRIMEINV") == 0){
             char A[32];
             scanf("%s", A);
             IMPRIMEINV(A);

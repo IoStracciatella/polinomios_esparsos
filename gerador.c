@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define QTD_C 20       //50,000
+#define QTD_C 5       //50,000
 #define MAX_G 2000        //2,000
-#define MAX_C 20      //500,000
-#define QTD_ESC 2     //20,000
+#define MAX_C 200      //500,000
+#define QTD_ESC 5     //20,000
 
 
 void imprime_cg(int v[]){
@@ -33,7 +33,7 @@ int main(){
 
     srand(time(NULL));
         int v[QTD_C];
-    printf("DEF A 50000\n");
+    printf("DEF A %d\n", QTD_C);
 
     imprime_cg(v);
 
@@ -49,11 +49,11 @@ int main(){
     }
     printf("IMPRIME A\n");
     printf("GRAU A\n");
-    printf("DEF B 50000\n");
+    printf("DEF B %d\n", QTD_C);
 
     imprime_cg(v);
 
-    printf("SOMA A B R\n");
+    //printf("SOMA A B R\n");
 
     return 0;
 }
