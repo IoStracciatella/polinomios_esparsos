@@ -6,17 +6,19 @@
 #define FALSE 0
 #define boolean int
 
+typedef struct termo TERMO;
 typedef struct polinomio POLINOMIO;
 
-void DEF(char nome[32], int k);
 
-void SOMA(char A[32], char B[32], char R[32]);
+POLINOMIO *DEF(char nome[32], int k);
+
+boolean SOMA(char A[32], char B[32], char R[32]);
 
 void PROD(char A[32], char B[32], char R[32]);
 
-boolean ADD(char A[32], int c, int g);
+TERMO *ADD(char A[32], long long c, int g);
 
-boolean ESCALA(char A[32], int c);
+boolean ESCALA(char A[32], long long c);
 
 int COEF(char A[32], int g);
 

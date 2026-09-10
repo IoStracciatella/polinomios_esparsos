@@ -18,14 +18,14 @@ int main(){
             DEF(nome,k);
         }
         else if(strcmp(c, "SOMA") == 0){
-            char R[32];
+            char *R = (char *)malloc(sizeof(char)*32);
             char A[32];
             char B[32];
             scanf("%s %s %s", A, B, R);
             SOMA(A,B,R);
         }
         else if(strcmp(c, "PROD") == 0){
-            char R[32];
+            char *R = (char *)malloc(sizeof(char)*32);
             char A[32];
             char B[32];
             scanf("%s %s %s", A, B, R);
@@ -33,14 +33,15 @@ int main(){
         }
         else if(strcmp(c, "ADD") == 0){
             char A[32];
-            int c, g;
-            scanf("%s %d %d", A, &c, &g);
+            long long c;
+            int g;
+            scanf("%s %lld %d", A, &c, &g);
             ADD(A,c,g);
         }
         else if(strcmp(c, "ESCALA") == 0){
             char A[32];
-            int c;
-            scanf("%s %d", A, &c);
+            long long c;
+            scanf("%s %lld", A, &c);
             ESCALA(A,c);
         }
         else if(strcmp(c, "COEF") == 0){

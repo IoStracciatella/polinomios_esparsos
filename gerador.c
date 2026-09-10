@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define QTD_C 5       //50,000
+#define QTD_C 50000       //50,000
 #define MAX_G 2000        //2,000
-#define MAX_C 200      //500,000
-#define QTD_ESC 5     //20,000
+#define MAX_C 500000      //500,000
+#define QTD_ESC 20000     //20,000
 
 
 void imprime_cg(int v[]){
@@ -54,6 +54,7 @@ int main(){
     imprime_cg(v);
 
     //printf("SOMA A B R\n");
+    printf("FIM");
 
     return 0;
 }
