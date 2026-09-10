@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lista.h"
+#include <string.h>
+
 #include "polinomio.h"
 
 struct termo{
@@ -13,20 +14,58 @@ struct polinomio{
     char *nome;
     TERMO *inicio;
 };
+static POLINOMIO *nompol[TAM_MAX];
+static int fim = 0;
 
 
-POLINOMIO *DEF(POLINOMIO *p, int k){
+POLINOMIO *DEF(char nome[32], int k){
+    POLINOMIO *p = (POLINOMIO *)malloc(sizeof(POLINOMIO));
+    p->nome = nome;
+    p->inicio = NULL;
+    nompol[fim] = p;
+    fim++;
+
     for (int i=0; i < k; i++){
         long long c;
         int g;
         scanf("%lld %d", &c, &g);
-        ADD(p,c,g);
+        ADD(p->nome,c,g);
     }
     return p;
     //printf("DEFINICAO FEITA\n");
 }
 
-boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r){
+boolean SOMA(char A[32], char B[32], char R[32]){
+    POLINOMIO *a = NULL;
+    POLINOMIO *b = NULL;
+    POLINOMIO *r = NULL;
+    int i = 0;
+
+    while(a == NULL || b == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            a = nompol[i];
+        }
+        else if (strcmp(nompol[i]->nome,B) == 0){
+            b = nompol[i];
+        }
+        else if (strcmp(nompol[i]->nome,R) == 0){
+            r = nompol[i];
+        }
+
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
+
+    if (r == NULL){
+        r = DEF(R, 0);
+    }
+    else if(r != a && r != b){
+        LIBERA(R);
+        r = DEF(R,0);
+        free(R);
+    }
 
     if (a != NULL && b != NULL){
         TERMO *aux[2];
@@ -37,14 +76,14 @@ boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r){
 
         if (a == r){
             while (aux[1] != NULL){
-                ADD(a,aux[1]->c,aux[1]->g);
+                ADD(a->nome,aux[1]->c,aux[1]->g);
                 aux[1] = aux[1]->proximo;
             }
             return TRUE;
         }
         else if (b == r){
             while (aux[0] != NULL){
-                ADD(a,aux[0]->c,aux[0]->g);
+                ADD(a->nome,aux[0]->c,aux[0]->g);
                 aux[0] = aux[0]->proximo;
             }
             return TRUE;
@@ -52,38 +91,46 @@ boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r){
 
         for (int i=0;i<2;i++){
             while(aux[i] != NULL){
-                ADD(r,aux[i]->c,aux[i]->g);
+                ADD(r->nome,aux[i]->c,aux[i]->g);
                 aux[i] = aux[i]->proximo;
             }
         }
         return TRUE;
     }
+
+
 }
 
 //falta
-void PROD(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r){
+void PROD(char A[32], char B[32], char R[32]){
+    printf("%s %s %s\n", A, B, R);
     //free R se ja existir
 }
 
-boolean ADD(POLINOMIO *p, long long c, int g){
-
-    if (p != NULL && c != 0){
+TERMO *ADD(char A[32], long long c, int g){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
+    if (p != NULL){
         TERMO *aux = p->inicio;
         TERMO *aux2 = NULL;
         while (aux != NULL && aux->g > g){
             aux2 = aux;
             aux = aux->proximo;
         }
+
         if (aux != NULL){
             if (aux->g == g){
-                if (aux->c = -c){
-                    REMOVE(p, aux->g);
-                }
-                else{
-                    aux->c += c;
-                }
-                return TRUE;
-                //return aux;
+                aux->c += c;
+                return aux;
             }
         }
         if (aux == p->inicio){
@@ -93,8 +140,7 @@ boolean ADD(POLINOMIO *p, long long c, int g){
             pnovo->c = c;
             pnovo->g = g;
             //printf("ADICAO FEITA\n");
-            return TRUE;
-            //return pnovo;
+            return pnovo;
         }
         else{
             TERMO *pnovo = (TERMO *)malloc(sizeof(TERMO));
@@ -102,9 +148,8 @@ boolean ADD(POLINOMIO *p, long long c, int g){
             aux2->proximo = pnovo;
             pnovo->c = c;
             pnovo->g = g;
-            return TRUE;
             //printf("ADICAO FEITA\n");
-            //return pnovo;
+            return pnovo;
         }
     }
     else{
@@ -113,8 +158,18 @@ boolean ADD(POLINOMIO *p, long long c, int g){
     }
 }
 
-boolean ESCALA(POLINOMIO *p, long long c){
-
+boolean ESCALA(char A[32], long long c){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
     if (p != NULL && p->inicio != NULL){
         TERMO *aux = p->inicio;
         while(aux != NULL){
@@ -128,11 +183,21 @@ boolean ESCALA(POLINOMIO *p, long long c){
     }
 }
 
-int COEF(POLINOMIO *p, int g){
-
+int COEF(char A[32], int g){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
     if (p != NULL && p->inicio != NULL){
         TERMO *aux = p->inicio;
-        while (aux != NULL && aux->g >= g){
+        while (aux->g >= g){
             if (aux->g == g){
                 printf("%lld\n", aux->c);
                 return aux->c;
@@ -140,24 +205,32 @@ int COEF(POLINOMIO *p, int g){
             else{
                 aux = aux->proximo;
             }
-            
         }
         return FALSE;
     }
 }
 
-boolean REMOVE(POLINOMIO *p, int g){
-
+boolean REMOVE(char A[32], int g){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
     if (p != NULL && p->inicio != NULL){
         TERMO *aux = p->inicio;
         TERMO *aux2 = NULL;
 
-        while (aux != NULL && aux->g > g){
+        while (aux->g > g && aux != NULL){
             aux2 = aux;
             aux = aux->proximo;
         }
-        
-        if (aux != NULL && aux->g == g){
+        if (aux->g == g){
             if (aux == p->inicio){
                 p->inicio = aux->proximo;
             }
@@ -174,8 +247,19 @@ boolean REMOVE(POLINOMIO *p, int g){
     }
 }
 
-boolean REMOVEMENOR(POLINOMIO *p){
-
+boolean REMOVEMENOR(char A[32]){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+            break;
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
     if (p != NULL && p->inicio != NULL){
         TERMO *aux = p->inicio;
         TERMO *aux2 = NULL;
@@ -195,15 +279,37 @@ boolean REMOVEMENOR(POLINOMIO *p){
     return FALSE;
 }
 
-int GRAU(POLINOMIO *p){
+int GRAU(char A[32]){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
 
+    }
     if (p != NULL && p->inicio != NULL){
         printf("%d\n", p->inicio->g);
         return p->inicio->g;
     }
 }
 
-void IMPRIME(POLINOMIO *p){
+void IMPRIME(char A[32]){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+        if (i == fim-2){
+            break;
+        }
+        i++;
+    }
 
     if (p != NULL){
         if (p->inicio != NULL){
@@ -221,16 +327,36 @@ void IMPRIME(POLINOMIO *p){
 }
 
 //falta
-void IMPRIMEINV(POLINOMIO *p){
+void IMPRIMEINV(char A[32]){
+    POLINOMIO *p = NULL;
 
+    for (int i = 0;i<fim;i++){
+        printf("%s", nompol[i]->nome);
+
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+        }
+    }
 }
 
 
-void LIBERA(POLINOMIO *p){
+void LIBERA(char A[32]){
+    POLINOMIO *p = NULL;
+    int i = 0;
+    while(p == NULL){
+        if (strcmp(nompol[i]->nome,A) == 0){
+            p = nompol[i];
+            break;
+        }
+        if (i == fim-1){
+            break;
+        }
+        i++;
+    }
 
     if (p != NULL){
         while(p->inicio != NULL){
-            REMOVEMENOR(p);
+            REMOVEMENOR(A);
         }
         free(p->nome);
         p->nome = NULL;
@@ -239,5 +365,14 @@ void LIBERA(POLINOMIO *p){
         p = NULL;
     }
 
+    for (int j=i;j<fim-1;j++){
+        nompol[j] = nompol[j+1];
+    }
+    nompol[fim-1] = NULL;
+    fim--;
+
 }
 
+void FIM(){
+    
+}

@@ -1,40 +1,35 @@
 #ifndef POLINOMIO_H
 #define POLINOMIO_H
 
-#define TAM_MAX 512
+#define boolean int
 #define TRUE 1
 #define FALSE 0
-#define boolean int
 
-typedef struct termo TERMO;
 typedef struct polinomio POLINOMIO;
+typedef struct termo TERMO;
 
+POLINOMIO *DEF(POLINOMIO *p, int k);
 
-POLINOMIO *DEF(char nome[32], int k);
+boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r);
 
-boolean SOMA(char A[32], char B[32], char R[32]);
+void PROD(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r);
 
-void PROD(char A[32], char B[32], char R[32]);
+boolean ADD(POLINOMIO *a, long long c, int g);
 
-TERMO *ADD(char A[32], long long c, int g);
+boolean ESCALA(POLINOMIO *a, long long c);
 
-boolean ESCALA(char A[32], long long c);
+int COEF(POLINOMIO *a, int g);
 
-int COEF(char A[32], int g);
+boolean REMOVE(POLINOMIO *a, int g);
 
-boolean REMOVE(char A[32], int g);
+boolean REMOVEMENOR(POLINOMIO *a);
 
-boolean REMOVEMENOR(char A[32]);
+int GRAU(POLINOMIO *a);
 
-int GRAU(char A[32]);
+void IMPRIME(POLINOMIO *a);
 
-void IMPRIME(char A[32]);
+void IMPRIMEINV(POLINOMIO *a);
 
-void IMPRIMEINV(char A[32]);
+void LIBERA(POLINOMIO *a);
 
-void LIBERA(char A[32]);
-
-void FIM();
-
-
-#endif
+#endif 

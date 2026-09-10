@@ -1,92 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "polinomio.h"
+#include "lista.h"
 
 
 int main(){
     char c[12];
-    int fim = 0;
+    int fimloop = 0;
 
-    while (fim == 0){
+    LISTA *lista = criar_lista();
+
+    while (fimloop == 0){
         scanf("%s", c);
         if (strcmp(c,"DEF") == 0){
-            char *nome = (char *)malloc(sizeof(char)*32);
-            int k;
-            scanf("%s", nome);
-            scanf("%d", &k);
-            DEF(nome,k);
+            char *A = (char *)malloc(sizeof(char)*32);
+            scanf("%s", A);
+            inserir(A, c, lista);
         }
-        else if(strcmp(c, "SOMA") == 0){
+        else if(strcmp(c, "SOMA") == 0 || strcmp(c, "PROD") == 0){
             char *R = (char *)malloc(sizeof(char)*32);
             char A[32];
             char B[32];
             scanf("%s %s %s", A, B, R);
-            SOMA(A,B,R);
+            busca_tripla(A, B, R, c, lista);
         }
-        else if(strcmp(c, "PROD") == 0){
-            char *R = (char *)malloc(sizeof(char)*32);
-            char A[32];
-            char B[32];
-            scanf("%s %s %s", A, B, R);
-            PROD(A,B,R);
-        }
-        else if(strcmp(c, "ADD") == 0){
-            char A[32];
-            long long c;
-            int g;
-            scanf("%s %lld %d", A, &c, &g);
-            ADD(A,c,g);
-        }
-        else if(strcmp(c, "ESCALA") == 0){
-            char A[32];
-            long long c;
-            scanf("%s %lld", A, &c);
-            ESCALA(A,c);
-        }
-        else if(strcmp(c, "COEF") == 0){
-            char A[32];
-            int g;
-            scanf("%s %d", A, &g);
-            COEF(A,g);
-        }
-        else if(strcmp(c, "REMOVE") == 0){
-            char A[32];
-            int g;
-            scanf("%s %d", A, &g);
-            REMOVE(A,g);
-        }
-        else if(strcmp(c, "REMOVEMENOR") == 0){
+        else if(strcmp(c, "ADD") == 0 || strcmp(c, "ESCALA") == 0 || strcmp(c, "COEF") == 0 || strcmp(c, "REMOVE") == 0 || strcmp(c, "REMOVEMENOR") == 0 || strcmp(c, "GRAU") == 0 || strcmp(c, "IMPRIME") == 0 || strcmp(c, "IMPRIMEINV") == 0 || strcmp(c, "LIBERA") == 0){
             char A[32];
             scanf("%s", A);
-            REMOVEMENOR(A);
+            busca(A, c, lista);
         }
-        else if(strcmp(c, "GRAU") == 0){
-            char A[32];
-            scanf("%s", A);
-            GRAU(A);
+        else if (strcmp(c,"FIM") == 0){
+            fim(c, lista);
+            //fimloop = 1;
         }
-        else if(strcmp(c, "IMPRIME") == 0){
-            char A[32];
-            scanf("%s", A);
-            IMPRIME(A);
-        }
-        else if(strcmp(c, "IMPRIMEINV") == 0){
-            char A[32];
-            scanf("%s", A);
-            IMPRIMEINV(A);
-        }
-        else if(strcmp(c, "LIBERA") == 0){
-            char A[32];
-            scanf("%s", A);
-            LIBERA(A);
-        }
-        else if(strcmp(c,"FIM") == 0){
-            fim = 1;
-            break;
+        else if (strcmp(c,"teste") == 0){
+            teste(lista);
+            //fimloop = 1;
         }
         else{
             printf("Digite algo certo!\n");
+            fimloop = 1;
         }
             
     }
