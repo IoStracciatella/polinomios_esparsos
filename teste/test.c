@@ -11,13 +11,15 @@ struct teste{
 int main(){
     TESTE *p = (TESTE *)malloc(sizeof(TESTE));
     char *nomed = (char *)malloc(sizeof(char)*32);
-    nomed = "DOWDJWIODW";
-    TESTE *v[23];
-    v[3]->nome = "chau";
-    printf("%s\n", v[3]->nome);
+    scanf("%s\n", nomed);
+    
+    p->nome = "chau";
+    printf("%s\n", p->nome);
 
-    printf("%s", nomed);
+    //printf("%s", nomed);
 
+    free(p);
+    free(nomed);
 
     return 0;
 }

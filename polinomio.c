@@ -44,7 +44,7 @@ boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r){
         }
         else if (b == r){
             while (aux[0] != NULL){
-                ADD(a,aux[0]->c,aux[0]->g);
+                ADD(b,aux[0]->c,aux[0]->g);
                 aux[0] = aux[0]->proximo;
             }
             return TRUE;
@@ -76,11 +76,11 @@ boolean ADD(POLINOMIO *p, long long c, int g){
         }
         if (aux != NULL){
             if (aux->g == g){
-                if (aux->c = -c){
+                if (aux->c == -c){
                     REMOVE(p, aux->g);
                 }
                 else{
-                    aux->c += c;
+                    aux->c = aux->c + c;
                 }
                 return TRUE;
                 //return aux;
@@ -230,11 +230,10 @@ void LIBERA(POLINOMIO *p){
 
     if (p != NULL){
         while(p->inicio != NULL){
-            REMOVEMENOR(p);
+            REMOVE(p,p->inicio->g);
         }
         free(p->nome);
         p->nome = NULL;
-        free(p->inicio);
         free(p);
         p = NULL;
     }

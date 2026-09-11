@@ -15,7 +15,7 @@ int main(){
         if (strcmp(c,"DEF") == 0){
             char *A = (char *)malloc(sizeof(char)*32);
             scanf("%s", A);
-            inserir(A, c, lista);
+            criar_polinomio(A, c, lista);
         }
         else if(strcmp(c, "SOMA") == 0 || strcmp(c, "PROD") == 0){
             char *R = (char *)malloc(sizeof(char)*32);
@@ -24,14 +24,19 @@ int main(){
             scanf("%s %s %s", A, B, R);
             busca_tripla(A, B, R, c, lista);
         }
-        else if(strcmp(c, "ADD") == 0 || strcmp(c, "ESCALA") == 0 || strcmp(c, "COEF") == 0 || strcmp(c, "REMOVE") == 0 || strcmp(c, "REMOVEMENOR") == 0 || strcmp(c, "GRAU") == 0 || strcmp(c, "IMPRIME") == 0 || strcmp(c, "IMPRIMEINV") == 0 || strcmp(c, "LIBERA") == 0){
+        else if(strcmp(c, "ADD") == 0 || strcmp(c, "ESCALA") == 0 || strcmp(c, "COEF") == 0 || strcmp(c, "REMOVE") == 0 || strcmp(c, "REMOVEMENOR") == 0 || strcmp(c, "GRAU") == 0 || strcmp(c, "IMPRIME") == 0 || strcmp(c, "IMPRIMEINV") == 0){
             char A[32];
             scanf("%s", A);
-            busca(A, c, lista);
+            busca_opera(A, c, lista);
+        }
+        else if (strcmp(c, "LIBERA") == 0){
+            char A[32];
+            scanf("%s", A);
+            libera(A, lista);
         }
         else if (strcmp(c,"FIM") == 0){
             fim(c, lista);
-            //fimloop = 1;
+            fimloop = 1;
         }
         else if (strcmp(c,"teste") == 0){
             teste(lista);
@@ -39,7 +44,6 @@ int main(){
         }
         else{
             printf("Digite algo certo!\n");
-            fimloop = 1;
         }
             
     }
