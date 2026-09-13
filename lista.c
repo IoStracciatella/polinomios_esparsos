@@ -118,9 +118,9 @@ boolean busca_tripla(char *A, char *B, char *R, char *c, LISTA *lista){
                 else{
                     free(R);
                 }
-            }
             busca_func(c, a, b, r);
             return TRUE;
+            }
         }
         else{
             free(R);

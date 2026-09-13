@@ -12,7 +12,7 @@ POLINOMIO *DEF(POLINOMIO *p, int k);
 
 boolean SOMA(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r);
 
-void PROD(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r);
+boolean PROD(POLINOMIO *a, POLINOMIO *b, POLINOMIO *r);
 
 boolean ADD(POLINOMIO *a, long long c, int g);
 
